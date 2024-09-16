@@ -1,0 +1,68 @@
+﻿@model Shop.Domain.ViewModels.Account.InformationUserProfileViewModel
+
+@{
+    var user = (User)ViewBag.User;
+}
+
+@{
+    ViewData["Title"] = "پنل کاربری";
+}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>داشبورد</title>
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <table class="table table-profile">
+                                    <tbody>
+                                        <tr>
+                                            <td class="w-50">
+                                                <div class="title">نام و نام خانوادگی :</div>
+                                                <div class="value"> @user.GetUserName()</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="title">شماره تلفن همراه:</div>
+                                                <div class="value">@Model.PhoneNumber</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="title">تاریخ عضویت:</div>
+                                                <div class="value">@Model.CreateDate.ToStringShamsiDate()</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="title"> موجودی حساب:</div>
+                                                <div class="value">@Model.WalletAmount.ToString("#,0 تومان")</div>
+                                            </td>
+                                        </tr>
+
+
+
+                                    </tbody>
+                                </table>
+
+                                <div class="profile-edit-action">
+                                    <a asp-area="user" asp-controller="account" asp-action="EditUserProfile" class="link-spoiler-edit btn btn-secondary">ویرایش اطلاعات</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

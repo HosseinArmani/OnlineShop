@@ -1,0 +1,75 @@
+﻿@using Shop.Application.Extentions
+@using Shop.Application.Utils;
+
+@model IEnumerable<Shop.Domain.Models.Production.ProductComment>
+@if (Model.Any() && Model != null)
+{
+    @foreach (var item in Model.Where(c => c.ParentId == null))
+    {
+        <ul class="comment-list">
+            <li>
+                <div class="col-lg-3 pr">
+                    <section>
+                        <div class="comments-user-shopping">
+                            @item.User.GetUserName()
+                            <div class="cell-date">
+                                @item.CreateDate.ToShamsiDate()
+                            </div>
+                            <a onclick="ReplyComment(@item.Id)" class="btn btn-default">
+                                پاسخ
+
+                            </a>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-lg-9 pl">
+                    <div class="article">
+                        <ul class="comment-text">
+                            <div class="header">
+
+                                <p>
+                                    @item.Comment
+                                </p>
+                            </div>
+
+                        </ul>
+                    </div>
+                </div>
+                @if (Model.Any(c => c.ParentId == item.Id))
+                {
+                    <ul>
+                        @foreach (var Ritem in Model.Where(c => c.ParentId == item.Id))
+                        {
+
+                            <li>
+                                <div class="col-lg-3 pr">
+                                    <section>
+                                        <div class="comments-user-shopping">
+                                            @Ritem.User.GetUserName()
+                                            <div class="cell-date">
+                                                @Ritem.CreateDate.ToShamsiDate()
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                </div>
+
+                                <div class="header">
+
+                                    <p>
+                                        @Ritem.Comment
+                                    </p>
+                                </div>
+
+
+
+                            </li>
+
+                        }
+                    </ul>
+                }
+            </li>
+
+        </ul>
+    }
+}

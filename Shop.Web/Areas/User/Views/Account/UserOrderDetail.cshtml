@@ -1,0 +1,116 @@
+﻿@model Shop.Domain.Models.Orders.Order
+@{
+    ViewData["Title"] = "UserOrderDetail";
+    var index = 1;
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>جزییات سفارش </title>
+
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <div class="table-order-view">
+                                    <h2 class="order-view-title mt-4 mb-3">جزییات سفارش </h2>
+                                    @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                                    {
+                                        <table class="table table-profile-orders">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">تصویر</th>
+                                                    <th scope="col"> نام محصول</th>
+                                                    <th scope="col"> قیمت</th>
+                                                    <th scope="col"> تعداد</th>
+                                                    <th scope="col"> قیمت کل</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var order in Model.OrderDetails)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">@index</th>
+                                                        <td>
+                                                            <img src="/ImageProduct/Product/Thumb/@order.Product.ImageName" class="thumbnail" id="imgThumb" />
+                                                        </td>
+                                                        <td>@order.Product.Name</td>
+                                                        <td>@order.Price.ToString("#,0")</td>
+                                                        <td>@order.Count</td>
+                                                        <td>@((order.Price*order.Count).ToString("#,0"))</td>
+                                                    </tr>
+                                                    index++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    <br>
+                                    <br>
+                                    <div class="order-view-customer">
+                                        <div class="box-header">
+                                            <span class="box-title">نشانی ما</span>
+                                        </div>
+                                        <div class="profile-address-item">
+                                            <div class="profile-address-content">
+                                                <ul class="profile-address-info">
+                                                    <li>
+                                                        <div class="profile-address-info-item location">
+                                                            <span class="title-address">شماره تلفن : </span>
+                                                            @Model.User.PhoneNumber
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                @if (Model.User.addresses != null && Model.User.addresses.Any())
+                                                {
+                                                    <ul class="profile-address-info">
+                                                        @foreach (var address in Model.User.addresses)
+                                                        {
+                                                            <li>
+                                                                <div class="profile-address-info-item location">
+                                                                    <span class="title-address">استان : </span>
+                                                                    @address.State
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="profile-address-info-item location">
+                                                                    <span class="title-address">شهر : </span>
+                                                                    @address.City
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="profile-address-info-item location">
+                                                                    <span class="title-address">کدپستی : </span>
+                                                                    @address.PostalCode
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="profile-address-info-item location">
+                                                                    <span class="title-address">ادرس : </span>
+                                                                    @address.FullAddress
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+

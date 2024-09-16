@@ -1,0 +1,50 @@
+﻿@model Shop.Domain.ViewModels.Wallet.ChargeWalletViewModel
+@{
+    ViewData["Title"] = "شارژ کیف پول";
+}
+
+
+
+
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <div class="profile-address">
+                                    <div class="middle-container">
+                                        <form method="post" asp-area="User" asp-controller="Wallet" asp-action="ChargeWallet" class="form-checkout">
+                                            <div class="form-checkout-row">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>
+                                                            مبلغ به تومان:
+                                                        </label>
+                                                        <input type="number" class="form-control " asp-for="Amount" />
+                                                        <span class="text-danger" asp-validation-for="Amount"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="AR-CR">
+                                                    <button class="btn btn-success ">  شارژ کیف پول </button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

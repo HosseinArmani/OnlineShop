@@ -1,0 +1,21 @@
+﻿@model List<Shop.Domain.Models.Production.ProductGroup>
+
+
+<div class="product-categories">
+    <!-- item -->
+    
+    @foreach (var group in Model.Where(g=>g.ParentId==null))
+    {
+        <div class="col-lg-2 col-6">
+            <a asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@group.Id" class="category-card-vertical">
+                <img src="/ImageProduct/ImageGroup/@group.ImageName" alt="category" class="img-fluid mb-3">
+                <div class="card-inner text-center">
+                    <h6 class="card-title">@group.GroupTitle</h6>
+                
+                </div>
+            </a>
+        </div>
+    }
+
+
+</div>

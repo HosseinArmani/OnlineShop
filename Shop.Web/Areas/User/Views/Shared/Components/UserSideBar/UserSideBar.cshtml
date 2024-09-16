@@ -1,0 +1,76 @@
+﻿@model User
+
+
+
+    <div class="sidebar-profile sidebar-navigation">
+        <section class="profile-box">
+            <header class="profile-box-header-inline">
+                <div class="profile-avatar user-avatar profile-img">
+                    <img src="/images/user.png">
+                </div>
+            </header>
+            <footer class="profile-box-content-footer">
+                <span class="profile-box-nameuser">@Model.GetUserName() </span>
+                <span class="profile-box-registery-date">@Model.CreateDate.ToStringShamsiDate()</span>
+                <span class="profile-box-phone">شماره همراه : @Model.PhoneNumber</span>
+                <div class="profile-box-tabs">
+                    <a asp-controller="Account" asp-action="LogOut" class="profile-box-tab-sign-out"><i class="mdi mdi-logout-variant"></i>خروج از حساب</a>
+                </div>
+            </footer>
+        </section>
+        <section class="profile-box">
+            <ul class="profile-account-navs">
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="home" asp-action="index" class="active">
+                        <i class="mdi mdi-account-outline"></i>
+                        پروفایل
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="account" asp-action="EditUserProfile" >
+                        <i class="mdi mdi-cart"></i>
+                        ویرایش حساب کاربری
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="account" asp-action="ChangePassword" >
+                        <i class="mdi mdi-cart"></i>
+                        تغییر رمزعبور
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="Wallet" asp-action="ChargeWallet" >
+                        <i class="mdi mdi-cart"></i>
+                        کیف پول شما
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="Wallet" asp-action="UserWallet" >
+                        <i class="mdi mdi-cart"></i>
+                        تراکنش ها
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a  asp-area="user" asp-controller="Account" asp-action="FilterUserOrder">
+                        <i class="mdi mdi-cart"></i>
+                        همه سفارش ها
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="Account" asp-action="ShowUserFavorites"  >
+                        <i class="mdi mdi-heart"></i>
+                        لیست علاقه مندی
+                    </a>
+                </li>
+                <li class="profile-account-nav-item navigation-link-dashboard">
+                    <a asp-area="user" asp-controller="Account" asp-action="ShowAddress" >
+                        <i class="mdi mdi-map-outline"></i>
+                        آدرس
+                    </a>
+                </li>
+              
+            </ul>
+        </section>
+    </div>
+
+

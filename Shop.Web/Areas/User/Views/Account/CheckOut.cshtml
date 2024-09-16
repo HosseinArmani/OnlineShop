@@ -1,0 +1,211 @@
+﻿@using Shop.Domain.Models.Orders
+@model Order
+@{
+    ViewData["Title"] = "CheckOut";
+    var address = (Address)ViewData["Address"];
+    var transportation = (Transportation)ViewData["Transprtation"];
+
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>پرداخت نهایی</title>
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="blog-checkout d-block order-1">
+            <div class="col-lg">
+                <div class="checkout woocommerce-checkout">
+                    <div class="content-checkout container">
+                        <div class="notices-wrapper">
+                            <div class="col-12">
+
+                            </div>
+                        </div>
+                        <div class="middle-container">
+
+                            <div class="col2-set" id="customer-details">
+                                <div class="col-12">
+                                    <div class="billing-fields mt-4">
+                                        <h4>جزئیات صورتحساب</h4>
+                                        <div class="form-checkout-row">
+
+                                            <form asp-area="User" asp-controller="Account" asp-action="CheckOutCreateOrEditAddress" method="post" class="form-checkout">
+                                                <input type="hidden" value="@Model.UserId" name="UserId" />
+                                                <input type="hidden" value="@Model.Id" name="orderId" />
+                                                <input type="hidden" asp-for="@address.Id" name="Id" />
+
+                                                <div class="form-checkout-row">
+                                                    @if (address != null)
+                                                    {
+                                                        <p class="text-danger">
+                                                            آدرس شما در سیستم ثبت شده است.
+                                                            اگر قصد تغییر آدرس خود را دارید همه ی مقادیر رابا دقت واردکنید درغیراینصورت به انتهای صفحه بروید و با زدن روی دکمه 'پرداخت' سفارش خود را نهایی کنید
+                                                        </p>
+                                                        <p>استان :<span>@address.State</span></p>
+                                                        <p>شهر :<span>@address.City</span></p>
+                                                        <p>کد پستی:<span>@address.PostalCode</span></p>
+                                                        <p>آدرس:<span>@address.FullAddress</span></p>
+
+                                                    }
+                                                    <div class="form-checkout-valid-row ir-select">
+                                                        <label for="province">
+                                                            استان
+                                                            <abbr class="required" title="ضروری"
+                                                                  id="requiredcheckout">*</abbr>
+                                                        </label>
+                                                        <select name="State" class="ir-province"></select>
+
+                                                        <br />
+                                                        <label for="city">
+                                                            شهر
+                                                            <abbr class="required" title="ضروری"
+                                                                  id="requiredcheckout">*</abbr>
+                                                        </label>
+                                                        <select name="City" class="ir-city"></select>
+
+
+                                                    </div>
+
+
+                                                    <label for="post-code">
+                                                        کد پستی<abbr class="required" title="ضروری"
+                                                                     id="requiredcheckout">*</abbr>
+                                                    </label>
+                                                    <input type="text" asp-for="@address.PostalCode" name="PostalCode"
+                                                           class="input-name-checkout form-control"
+                                                           placeholder="کد پستی را بدون خط تیره بنویسید">
+
+                                                    <label for="address" asp-for="@address.FullAddress">
+                                                        آدرس
+                                                        <abbr class="required" title="ضروری"
+                                                              id="requiredcheckout">*</abbr>
+                                                    </label>
+                                                    <textarea rows="5" cols="30" asp-for="@address.FullAddress" name="FullAddress"
+                                                              class="textarea-name-checkout form-control"></textarea>
+
+
+
+                                                    <button type="submit" class="btn-registrar"> ثبت آدرس</button>
+
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="order-review-heading">سفارش شما</h3>
+                            <div class="checkout-review-order">
+                                <table class="checkout-review-order-table table table-borderless">
+
+                                    <tfoot>
+                                        @if (Model.OrderSum <= transportation.minBuy)
+                                        {
+
+                                            <tr class="cart-subtotal">
+                                                <th>مجموع</th>
+                                                <td>
+                                                    <span class="amount">
+                                                        @((Model.OrderSum + transportation.Amount).ToString("#,0"))
+                                                        <span>تومان</span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th>هزینه حمل و نقل</th>
+                                                <td>
+                                                    <div class="shipping-totals-item">
+                                                        <span class="shipping-destination">
+                                                            @transportation.Amount.ToString("#,0")
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr class="cart-subtotal">
+                                                <th>مجموع</th>
+                                                <td>
+                                                    <span class="amount">
+                                                        @Model.OrderSum.ToString("#,0")
+                                                        <span>تومان</span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="order-total">
+                                                <th>ارسال</th>
+                                                <td>
+                                                    <div class="shipping-totals-item">
+                                                        <span class="shipping-destination">
+                                                            رایگان
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                 
+                                    </tfoot>
+                                </table>
+
+
+                                <form asp-area="User" asp-controller="Account" asp-action="CheckOut">
+                                    <input type="hidden" name="OrderId" value="@Model.Id" />
+                                    <input type="hidden" name="UserId" value="@Model.UserId" />
+
+                                    <ul class="checkout-payment-methods">
+                                        <li class="checkout-payment-method-item d-block">
+                                            <label for="#" class="outline-radio">
+                                                <input type="radio" name="IsPayment"
+                                                       id="payment-option-online" value="false" checked>
+                                                <span class="outline-radio-check"></span>
+                                            </label>
+                                            <label for="#" class="shipping-totals-title-row">
+                                                <div class="shipping-totals-title">درگاه پرداخت زرین پال</div>
+                                            </label>
+                                        </li>
+                                        <li class="checkout-payment-method-item d-block">
+                                            <label for="#" class="outline-radio">
+                                                <input type="radio" name="IsPayment" id="payment-option-online" value="true">
+
+                                                <span class="outline-radio-check"></span>
+                                            </label>
+                                            <label for="#" class="shipping-totals-title-row">
+                                                <div class="shipping-totals-title">
+                                                    پرداخت از کیف پول
+                                                </div>
+                                            </label>
+                                        </li>
+
+
+                                    </ul>
+                                    @if (address != null)
+                                    {
+                                        <button class="btn-Order btn btn-primary mt-4 mb-3" type="submit">
+                                            پرداخت
+                                        </button>
+                                    }
+                                    </form>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <partial name="StateAndCity" />
+    <partial name="_ValidationScriptsPartial" />
+    
+}

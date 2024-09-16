@@ -1,0 +1,72 @@
+﻿@model Shop.Domain.ViewModels.Wallet.FilterWalletViewModel
+@{
+    ViewData["Title"] = "تراکنش ها";
+}
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <header>
+                            <h1>@ViewData["Title"]</h1>
+                        </header>
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <form method="get" asp-area="User" asp-controller="Wallet" asp-action="UserWallet" id="filter-Form">
+                                    <input type="hidden" class="form-control" asp-for="PageId" />
+                                </form>
+                                <div class="table-orders">
+                                    @if (Model.UserWallets != null && Model.UserWallets.Any())
+                                    {
+                                        <table class="table table-bordered table-hover table-striped text-center">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">نوع تراکنش</th>
+                                                    <th scope="col"> مبلغ </th>
+                                                    <th scope="col">تاریخ</th>
+                                                    <th scope="col">توضیحات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.UserWallets)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @if (@item.WalletType == WalletType.Variz)
+                                                            {
+                                                                <p class="text text-success text-center">واریز به  حساب</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="text text-danger text-center">برداشت از حساب</p>
+                                                            }
+                                                        </td>
+                                                        <td class="totla">
+                                                            <span class="amount">
+                                                                @item.Amount.ToString("#,0 تومان")
+                                                            </span>
+                                                        </td>
+                                                        <td>@item.CreateDate.ToShortDateString()</td>
+                                                        <td>@item.Description</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+
+                                </div>
+                                <partial name="_Paging" model="Model.GetCurrentPaging()" />
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model Shop.Domain.ViewModels.Admin.Account.EditUserForAdminViewModel
+@{
+    ViewData["Title"] = "ویرایش کاربر";
+    List<Role> roles = ViewData["Roles"] as List<Role>;
+}
+<meta name=robots content=noindex,nofollow>
+<div class="row">
+    <form method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    ویرایش اطلاعات
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label class="form-lable">نام</label>
+                        <input class="form-control" asp-for="FirstName">
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-lable">نام خانوادگی</label>
+                        <input class="form-control" asp-for="LastName">
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-lable">شماره همراه</label>
+                        <input class="form-control" asp-for="PhoneNumber" disabled>
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>انتخاب نقش کاربر</label>
+                        @foreach (var item in roles )
+                        {
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="SelectedRoles" value="@item.Id" @((Model.SelectedRoles.Any(r => r ==item.Id ) ? "checked" : ""))>@item.RoleTitle
+                                </label>
+                            </div>
+                        }
+
+                    </div>
+                    <input type="submit" value="ویرایش اطلاعات" class="btn btn-warning" />
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+

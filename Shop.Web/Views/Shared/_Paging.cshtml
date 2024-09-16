@@ -1,0 +1,34 @@
+﻿@model Shop.Domain.ViewModels.Paging.BasePaging
+
+
+<div class="pagination-product">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @if (Model.EndPage > Model.PageId)
+            {
+                <li class="page-item">
+                    <a class="page-link" onclick="FillPageId(@(Model.PageId +1))" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            @for (int i = Model.StartPage; i <= Model.EndPage; i++)
+            {
+                <li class="page-item">
+                    <a class="page-link @(Model.PageId ==i?"active":"")" onclick="FillPageId(@i)">@i</a>
+                </li>
+            }
+
+            @if (Model.StartPage < Model.PageId)
+            {
+                <li class="page-item">
+                    <a class="page-link" onclick="FillPageId(@(Model.PageId -1))" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+</div>
+

@@ -1,0 +1,101 @@
+﻿@model Shop.Domain.Models.Orders.Order
+@if (Model != null)
+{
+    <div class="header-cart-basket">
+        <a asp-area="user" asp-controller="Account" asp-action="ShowBasket" asp-route-orderId="@Model.Id" class="cart-basket-box">
+            <span class="icon-cart">
+                <i class="mdi mdi-shopping"></i>
+            </span>
+            <span class="title-cart">سبد خرید</span>
+
+            <span class="price-cart">
+                @Model.OrderSum.ToString("#,0")
+                <span>تومان</span>
+            </span>
+
+            @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+            {
+                <span class="count-cart">
+
+                    @Model.OrderDetails.Count()
+
+                </span>
+            }
+
+        </a>
+        <div class="widget-shopping-cart">
+            <div class="widget-shopping-cart-content">
+                <div class="wrapper">
+                    <div class="scrollbar" id="style-1">
+
+                        <div class="force-overflow">
+                            @if (Model.OrderDetails != null && Model.OrderDetails.Any())
+                            {
+                                <ul class="product-list-widget">
+                                    @foreach (var item in Model.OrderDetails)
+                                    {
+                                        <li class="mini-cart-item">
+                                            <div class="mini-cart-item-content">
+                                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.ProductId" class="mini-cart-item-content">
+                                                   
+                                                </a>
+                                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.ProductId" class="mini-cart-item-image d-block">
+                                                    <img src="/ImageProduct/Product/Thumb/@item.Product.ImageName" alt="@item.Product.Name" title="@item.Product.Name">
+                                                </a>
+
+                                                <span class="product-name-card">
+                                                    @item.Product.Name
+                                                </span>
+                                                <span class="product-name-card">
+                                                    تعداد:  @item.Count
+                                                </span>
+                                                <div class="quantity">
+                                                    <span class="quantity-Price-amount">
+                                                        @((item.Price*item.Count).ToString("#,0"))
+
+                                                        <span>تومان</span>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    }
+
+                                </ul>
+                            }
+                            else
+                            {
+
+                                <div class="mini-cart-item-content">
+
+
+                                    <span class="product-name-card">
+                                        سبد شما خالی است
+                                    </span>
+
+
+
+                                </div>
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mini-card-total">
+                    <strong>قیمت کل :@Model.OrderSum.ToString("#,0") </strong>
+                    <span class="price-total">
+
+                        <span>تومان</span>
+                    </span>
+                </div>
+
+
+                <div class="mini-card-button">
+                    <a asp-area="user" asp-controller="Account" asp-action="ShowBasket" asp-route-orderId="@Model.Id" class="view-card">مشاهده سبد خرید</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    }

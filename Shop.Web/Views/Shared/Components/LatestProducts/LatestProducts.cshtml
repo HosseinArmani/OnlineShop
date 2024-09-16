@@ -1,0 +1,32 @@
+﻿@using Shop.Domain.ViewModels.Site
+@model List<ProductListItemViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <aside class="main-row-bg d-block d-md-block">
+        <div class="bg-cover"></div>
+        <div class="container-main">
+            <div class="d-block">
+                <section class="content-title section-title mt-5">
+                    <div class="align-items-center">
+                        <div class="col-auto">
+                            <div class="title">
+                                <h2>جدید ترین محصولات</h2>
+                            </div>
+                            <div class="subtitle">
+                                <span>آخرین محصولات</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="mb-3">
+                    @foreach (var item in Model)
+                    {
+                        <partial name="_LatestProductBox" model="item" />
+                    }
+
+                </div>
+            </div>
+        </div>
+    </aside>
+}

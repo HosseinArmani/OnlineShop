@@ -1,0 +1,44 @@
+﻿@model Shop.Domain.ViewModels.Admin.Product.EditProducGroupViewModel
+@{
+    ViewData["Title"] = "ویرایش گروه";
+}
+<meta name=robots content=noindex,nofollow>
+
+<div class="row">
+    <form asp-area="Admin" asp-controller="Product" asp-action="EditProductGroup" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ParentId" />
+        <input type="hidden" asp-for="ProductGroupId" />
+        <input type="hidden" asp-for="ImageName" />
+        <div class="col-md-8">
+            <h2>@ViewData["Title"]</h2>
+            <hr />
+            <div class="form-group">
+                <label>عنوان </label>
+                <input type="text" asp-for="GroupTitle" class="form-control">
+                <span asp-validation-for="GroupTitle"></span>
+            </div>
+            <div class="form-group">
+                <label>عنوان یکتا</label>
+                <input type="text" asp-for="UrlName" class="form-control">
+                <span asp-validation-for="UrlName"></span>
+            </div>
+            <input type="submit" value="ذخیره اطلاعات" class="btn btn-success" />
+        </div>
+        <div class="col-md-4">
+            <p></p>
+            <img id="imGroup" class="thumbnail" src="/ImageProduct/ImageGroup/Thumb/@Model.ImageName" />
+            <div class="form-group">
+
+                <label>انتخاب تصویر</label>
+                <input type="file" name="imageGroup" id="imgProductGroup">
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <partial name="_Custom" />
+    <partial name="_ValidationScriptsPartial" />
+}
+

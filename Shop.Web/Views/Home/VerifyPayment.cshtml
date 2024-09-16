@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "نتیجه ی پرداخت";
+}
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="blog-checkout d-block order-1">
+            <div class="col-lg">
+                <div class="checkout woocommerce-checkout">
+                    <div class="content-checkout">
+                        <div class="middle-container">
+                            <header>
+                                <h1>@ViewData["Title"]</h1>
+                            </header>
+                            @if (ViewBag.Success == true)
+                            {
+                                <div class="col2-set" id="customer-details">
+
+                                    <div class="col-12">
+                                        <div class="billing-fields mt-4">
+                                            <h4 class="text-success">پرداخت انجام شد</h4>
+                                            <p class="thankyou-order-received">
+                                                پرداخت با موفقیت انجام شد.
+                                                از اینکه تاس لند را برای خرید انتخاب کردید از شما سپاسگزاریم.
+                                            </p>
+                                            <ul class="order-overview">
+                                                <li class="order-overview-item">
+                                                    کد پیگیری :
+                                                    <span>@ViewBag.code</span>
+                                                </li>
+                                                @*<li class="order-overview-item">
+                                                        تاریخ :
+                                                        <span>17 فروردین 1399</span>
+                                                    </li>*@
+                                                <li class="order-overview-item">
+                                                    روش پرداخت :
+                                                    <span>پرداخت اینترنتی هوشمند</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col2-set" id="customer-details">
+                                    <div class="col-12">
+                                        <div class="billing-fields mt-4">
+                                            <h4 class="text-danger">پرداخت انجام نشد</h4>
+                                            <p class="thankyou-order-received">
+                                                عملیات پرداخت با شکست مواجه شد.
+                                                چنانچه طی این فرایند مبلغی از حساب شما کسر شده است،طی 72 ساعت آینده
+                                                به حساب شما باز خواهد گشت.
+                                            </p>
+                                            <ul class="order-overview">
+                                                <li class="order-overview-item">
+                                                    کد پیگیری :
+                                                    <span>@ViewBag.code</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+

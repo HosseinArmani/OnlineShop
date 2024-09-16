@@ -1,0 +1,89 @@
+﻿@model Shop.Domain.Models.Account.Address
+@{
+    ViewData["Title"] = "ShowAddress";
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>نمایش آدرس</title>
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            @if (Model != null)
+                            {
+                                <div class="profile-stats">
+                                    <div class="profile-address">
+                                        <div class="box-header">
+                                            <span class="box-title">نشانی </span>
+                                        </div>
+                                        <div class="profile-address-item">
+                                            <div class="profile-address-item-top">
+                                                <div class="profile-address-item-title">@Model.State</div>
+
+                                            </div>
+
+                                            <div class="profile-address-content">
+                                                <ul class="profile-address-info">
+                                                    <li>
+                                                        <div class="profile-address-info-item location">
+                                                            <i class="mdi mdi-map-outline"></i>
+                                                            @Model.City
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="profile-address-info-item location">
+                                                            <i class="mdi mdi-email-outline"></i>
+                                                            @Model.PostalCode
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div class="profile-address-info-item location">
+                                                            <i class="mdi mdi-account"></i>
+                                                            @Model.FullAddress
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="location-link">
+                                                        <a asp-area="User" asp-controller="Account" asp-action="EditAddress" asp-route-addressId="@Model.Id" class="edit-address-link">ویرایش آدرس</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="profile-stats">
+                                    <div class="profile-address">
+
+                                        <div class="profile-address-item">
+                                            <div>
+                                                <ul class="profile-address-info">
+                                                    <li class="location-link">
+                                                        <a asp-area="User" asp-controller="Account" asp-action="CreateAddress" class="btn btn-success">افزودن آدرس</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+

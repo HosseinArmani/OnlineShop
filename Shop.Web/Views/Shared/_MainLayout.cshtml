@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    @RenderSection("MetaTag", false)
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="shortcut icon" type=image/x-icon href=/favicon.ico>
+    <!-- font---------------------------------------->
+    <partial name="_HeaderRefrences" />
+    @RenderSection("styles", false)
+    <partial name="_Message" />
+</head>
+
+<body>
+    <!-- header-------------------------------->
+    @await Component.InvokeAsync("SiteHeader")
+    <!-- header-------------------------------->
+    @RenderBody()
+    <!-- footer------------------------------------------->
+    @await Component.InvokeAsync("SiteFooter")
+    <!-- footer------------------------------------------->
+    <!-- scroll_Progress------------------------->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" id="scrollProgress" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>
+    <!-- scroll_Progress------------------------->
+
+    <partial name="_FooterRefrences">
+        @RenderSection("scripts", false)
+        <partial name="_Message">
+
+</body>
+
+
+</html>

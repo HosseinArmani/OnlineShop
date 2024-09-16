@@ -1,0 +1,61 @@
+﻿@using Shop.Domain.ViewModels.Site
+@model ProductListItemViewModel
+
+
+<div class="col-lg-4 col-md-6 col-sm-12 col-12 pt-4 pr">
+    <div class="card-product-horizontal">
+        <div class="card-product-horizontal-img">
+            <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId" class="d-block">
+                <img src="/ImageProduct/Product/@Model.ProductImage" alt="@Model.ProductName" title="@Model.ProductName">
+            </a>
+        </div>
+        <div class="card-product-horizontal-content">
+            <div class="card-product-horizontal-content-title">
+                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">
+                    <h3>@Model.ProductName</h3>
+                </a>
+            </div>
+            @{
+                int prcent = 0;
+                if (Model.DicPercent != null)
+                {
+                    prcent = (Model.Price * (int)Model.DicPercent) / 100;
+
+                }
+            }
+            @if (Model.IsActive)
+            {
+                @if (Model.DicPercent != null)
+
+                {
+                    <div class="card-product-horizontal-content-price">
+                        <span class="amount">
+                            <del><span>@Model.Price.ToString("#,0")<span>تومان</span></span></del>
+                            <span>@((Model.Price - prcent).ToString("#,0"))<span>تومان</span></span>
+                        </span>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="card-product-horizontal-content-price">
+                        <span class="amount">
+                           <span>@Model.Price.ToString("#,0")<span>تومان</span></span>   
+                        </span>
+                    </div>
+
+                }
+
+            }
+            else
+            {
+                <div class="card-product-horizontal-content-price">
+                    <span class="amount">
+                        اتمام موجودی
+                    </span>
+                </div>
+            }
+       
+        </div>
+    </div>
+</div>

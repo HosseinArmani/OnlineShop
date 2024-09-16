@@ -1,0 +1,80 @@
+﻿@model Shop.Domain.ViewModels.Order.FilterOrderForUserPanel
+@{
+    ViewData["Title"] = "لیست سفارشات";
+    var index = 1;
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>سفارشات</title>
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <form method="get" asp-area="User" asp-controller="Account" asp-action="FilterUserOrder" id="filter-Form">
+                                    <input type="hidden" class="form-control" asp-for="PageId" />
+                                </form>
+
+                                <div class="table-orders">
+                                    @if (Model.Orders != null && Model.Orders.Any())
+                                    {
+                                        <table class="table table-profile-orders">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">مبلغ نهایی</th>
+                                                    <th scope="col">تاریخ ثبت سفارش</th>
+                                                    <th scope="col">وضعیت پرداخت</th>
+                                                    <th scope="col">وضعیت پرداخت</th>
+                                                    <th scope="col">جزئیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var order in Model.Orders)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">@index</th>
+                                                        <td class="order-code">@order.OrderSum.ToString("#,0")</td>
+                                                        <td>@order.CreateDate.ToShamsiDate()</td>
+                                                        <td>
+                                                            @if (order.IsFinaly)
+                                                            {
+                                                                <span class="text text-success">پرداخت شده</span>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="text text-danger">پرداخت نشده</span>
+                                                            }
+                                                        </td>
+                                                        <td>@order.OrderState.GetEnumName()</td>
+                                                        <td class="detail">
+                                                            <a asp-area="User" asp-controller="Account" asp-action="UserOrderDetail" asp-route-orderId="@order.Id"
+                                                               class="btn btn-secondary d-block">نمایش</a>
+                                                        </td>
+                                                    </tr>
+                                                    index++;
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+
+                                </div>
+
+                                <partial name="_Paging" model="Model.GetCurrentPaging()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

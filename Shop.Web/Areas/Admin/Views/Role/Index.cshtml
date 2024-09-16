@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Shop.Domain.Models.Account.Role>
+@{
+    ViewData["Title"] = "Index";
+}
+<meta name=robots content=noindex,nofollow>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="/Admin/User" class="btn btn-dark">لیست کامل</a>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                        <br />
+                        <a asp-area="Admin" asp-controller="Role" asp-action="Create" class="btn btn-success">افزودن نقش جدید</a>
+                        <br />
+                        <br />
+                        @if (Model != null && Model.Any())
+                        {
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">عنوان</th>
+                                        <th scope="col">دستورات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var role in Model)
+                                    {
+                                        <tr>
+
+                                            <td>@role.RoleTitle</td>
+
+                                            <td>
+                                                <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Role" asp-action="Edit" asp-route-roleId="@role.Id">ویرایش</a>
+                                            </td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+                <!-- /.table-responsive -->
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+

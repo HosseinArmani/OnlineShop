@@ -1,0 +1,204 @@
+﻿@using Shop.Application.Extentions
+@using Shop.Domain.Models.Account
+@using Shop.Domain.Models.Orders
+
+@{
+    var user = (User)ViewBag.User;
+
+
+}
+
+<header class="header-main">
+    <div class="d-block">
+        <section class="h-main-row">
+            <div class="col-lg-9 col-md-12 col-xs-12 pr">
+                <div class="header-right">
+                    <div class="col-lg-3 pr">
+                        <div class="header-logo row text-right">
+                            <a href="/">
+                                <img src="/images/LogoTas.png" alt="تاس لند">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 pr">
+                        <div class="header-search row text-right">
+                            <div class="header-search-box">
+                                <form asp-controller="Product" asp-action="ArchiveProduct" class="form-search">
+                                    <input type="search" class="header-search-input" name="ProductName"
+                                           placeholder="نام کالا مورد نظر خود را جستجو کنید…">
+                                    <div class="action-btns">
+                                        <button class="btn btn-search" type="submit">
+                                            <img src="/images/search.png" alt="search">
+                                        </button>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="col-lg-3 col-md-0 col-xs-12 pl">
+                    <div class="header-left">
+                        <div class="header-account text-left">
+                            <div class="d-block">
+                                <div class="account-box">
+                                    <div class="nav-account d-block pl">
+                                        <span class="icon-account">
+                                            <img src="/images/User2.png" class="avator" alt="avator">
+                                        </span>
+                                        <span class="title-account">@user.GetUserName()</span>
+                                        <div class="dropdown-menu">
+                                            <ul class="account-uls mb-0">
+                                                <li class="account-item">
+                                                    <a href="/user" class="account-link">پنل کاربری</a>
+                                                </li>
+                                                <li class="account-item">
+                                                    <a asp-area="user" asp-controller="Account" asp-action="FilterUserOrder"   class="account-link">سفارشات من</a>
+                                                </li>
+                                               
+                                                <li class="account-item">
+                                                    <a asp-controller="Account" asp-action="LogOut" class="account-link">خروج</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <i class="mdi mdi-account"></i>
+                    <a asp-controller="Account" asp-action="Login"> ورود </a> /
+                    <a asp-controller="Account" asp-action="Register">ثبت نام </a>
+                </div>
+            }
+        </section>
+        <nav class="header-main-nav">
+            <div class="d-block">
+                <div class="align-items-center">
+                    <ul class="menu-ul mega-menu-level-one">
+
+                        @await Component.InvokeAsync("SideBarGroup")
+
+                        <li class="divider-space-card">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                @await Component.InvokeAsync("ShowCart")
+                               
+                                <div class="header-cart-interest">
+                                    <a asp-area="user" asp-controller="Account" asp-action="ShowUserFavorites" class="d-block">
+                                        <i class="fa fa-heart"></i>
+                                        <span class="counter">
+                                            @if (ViewBag.FavoriteCount != null)
+                                            {@ViewBag.FavoriteCount}
+                                        </span>
+                                    </a>
+                                </div>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--    responsive-megamenu-mobile----------------->
+        @await Component.InvokeAsync("SideBarMobile")
+        <div class="nav-btn nav-slider">
+            <span class="linee1"></span>
+            <span class="linee2"></span>
+            <span class="linee3"></span>
+        </div>
+        <div class="overlay"></div>
+        <!-- bottom-menu-joomy -->
+        <div class="bottom-menu-joomy">
+            <ul class="mb-0">
+                <li>
+                    <a href="/">
+                        <i class="mdi mdi-home"></i>
+                        صفحه اصلی
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="nav-btn nav-slider">
+                            <i class="mdi mdi-menu" aria-hidden="true"></i>
+                        </div>
+                        دسته بندی ها
+                    </a>
+                </li>
+           
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#exampleModalCenter">
+                        <i class="mdi mdi-magnify"></i>
+                        جستجو
+                    </a>
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="/user">
+                            <i class="mdi mdi-account"></i>
+                            حساب کاربری
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="/Register">
+                            <i class="mdi mdi-account-box"></i>
+                            ثبت نام
+                        </a>
+
+                        <a href="/Login">
+                            <i class="mdi mdi-login"></i>
+                            ورود
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <!--    responsive-megamenu-mobile----------------->
+    </div>
+</header>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">جستجو</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="header-search text-right">
+                    <div class="header-search-box">
+                        <form asp-controller="Product" asp-action="ArchiveProduct" class="form-search">
+                            <input type="search" class="header-search-input" name="ProductName"
+                                   placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                            <div class="action-btns">
+                                <button class="btn btn-search" type="submit">
+                                    <img src="/images/search.png" alt="search">
+                                </button>
+
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nav-categories-overlay"></div>
+<div class="overlay-search-box"></div>
+

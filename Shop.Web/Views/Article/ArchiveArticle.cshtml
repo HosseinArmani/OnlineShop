@@ -1,0 +1,49 @@
+﻿@using Shop.Domain.ViewModels.Admin.Article
+@model FilterArticleViewModel
+@{
+    ViewData["Title"] = "مقالات تاس لند ";
+}
+
+@section Scripts
+{
+    <partial name="_Custom" />
+
+}
+@section MetaTag
+    {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=robots content=index,follow>
+    <meta name=description content="مقالات تاس لند">
+    <title>مقالات تاس لند</title>
+
+}
+
+<main class="main-row mb-2 mt-2">
+    <div class="container-main">
+        <form id="filter-Form" method="get">
+            <input type="hidden" asp-for="PageId" />
+            <div class="d-block">
+                @if (Model.Articles != null && Model.Articles.Any())
+                {
+                    <div class="col-lg-9 col-md-8 col-xs-12 pr mt-3">
+                        <section class="content-widget">
+                            @foreach (var item in Model.Articles)
+                            {
+                                <partial name="_ArchiveArticleBox" model="item" />
+                            }
+                        </section>
+                    </div>
+                }
+
+
+                <div class="pagination-product pr-3 pl-3 pr">
+                    <partial name="_Paging" model="@Model.GetCurrentPaging()" />
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</main>
+

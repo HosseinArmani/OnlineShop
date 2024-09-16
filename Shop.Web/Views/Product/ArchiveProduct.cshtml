@@ -1,0 +1,133 @@
+﻿@using Shop.Domain.ViewModels.Admin.Product
+@using Shop.Domain.Models.Production
+@using Shop.Domain.ViewModels.Site
+
+@model FilterProductViewModel
+
+@{
+    ViewData["Title"] = "محصولات";
+    List<ProductGroup> productGroups = (List<ProductGroup>)ViewData["ProductGroup"];
+    List<long> selected = (List<long>)ViewData["SelectedGroups"];
+}
+@section Scripts
+{
+    <partial name="_Custom" />
+
+}
+@section MetaTag
+    {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=robots content=index,follow>
+    <meta name=description content="محصولات تاس لند">
+    <title>مجصولات</title>
+
+}
+
+<div class="container-main">
+    <form id="filter-Form" method="get">
+        <input type="hidden" asp-for="PageId" />
+        <div class="d-block">
+            <div class="page-content page-row">
+                <div class="main-row">
+                    <div id="breadcrumb">
+                        <i class="mdi mdi-home"></i>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">آرشیو محصولات</li>
+                            </ol>
+                        </nav>
+                    </div>
+
+                    <!-- start sidebar--------------------->
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr sticky-sidebar">
+                        <div class="shop-archive-sidebar">
+                            <div class="sidebar-archive mb-3">
+                                <section class="widget-product-categories">
+                                    <header class="cat-header">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-block text-right" data-toggle="collapse"
+                                                    href="#headingOne" role="button" aria-expanded="false"
+                                                    aria-controls="headingOne">
+                                                دسته بندی محصولات
+                                                <i class="mdi mdi-chevron-down"></i>
+                                            </button>
+                                        </h2>
+                                    </header>
+                                    <div class="product-filter">
+                                        <div class="card">
+                                            <div class="collapse show" id="headingOne">
+                                                <div class="card-main mb-0">
+
+
+                                                    @foreach (var group in productGroups.Where(g => g.ParentId == null))
+                                                    {
+
+                                                        <div class="form-auth-row">
+                                                            <label class="ui-checkbox">
+                                                                <input onchange="changeGroup()" type="checkbox" value="@group.Id" @if (selected != null) { @((selected.Any(s => s == group.Id) ? "checked" : "")) } name="SelectedGroups">
+                                                                <span class="ui-checkbox-check"></span>
+                                                            </label>
+                                                            <label class="remember-me">@group.GroupTitle</label>
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="shop-archive-content mt-3 d-block">
+                            <div class="archive-header">
+                                <h2 class="archive-header-title">آرشیو محصولات</h2>
+                                <div class="sort-tabs mt-0 d-inline-block pr">
+                                    <h4>مرتب‌سازی بر اساس :</h4>
+                                </div>
+
+                                <div class="form-ui">
+                                    <div onchange="changeGroup()" class="custom-select-ui">
+                                        <select class="right" asp-for="ProductOrder" asp-items="@Html.GetEnumSelectList<ProductOrder>()">
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                            @if (Model.ProductListItemViewModel != null && Model.ProductListItemViewModel.Any())
+                            {
+                                <div class="product-items">
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="Most-visited" role="tabpanel"
+                                             aria-labelledby="Most-visited-tab">
+                                            <div class="row">
+                                                @foreach (var item in Model.ProductListItemViewModel)
+                                                {
+                                                    <partial name="_ArchiveProductBox" model="item" />
+                                                }
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <partial name="_Paging" model="@Model.GetCurrentPaging()" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+

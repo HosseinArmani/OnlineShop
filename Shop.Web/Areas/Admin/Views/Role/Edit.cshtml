@@ -1,0 +1,86 @@
+﻿@model Shop.Domain.ViewModels.Admin.Permission.EditRoleViewModel
+@{
+    ViewData["Title"] = "ویرایش نقش";
+    var permissions = ViewData["Permissions"] as List<Permission>;
+}
+<meta name=robots content=noindex,nofollow>
+
+<form method="post" asp-area="Admin" asp-controller="Role" asp-action="Edit">
+    <div class="row">
+
+        <div class="col-md-8">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    نقش
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="RoleId" />
+                        <label>عنوان نقش</label>
+                        <input type="text" asp-for="RoleTitle" class="form-control">
+                    </div>
+                    <input type="submit" value="ویرایش نقش" class="btn btn-warning" />
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    دسترسی های نقش
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    @if (permissions != null && permissions.Any())
+                    {
+
+                        <ul>
+                            @foreach (var permission in permissions.Where(c => c.ParentId == null))
+                            {
+                                var isPermissionSelected = Model.SelectedPermission.Any(s => s == permission.Id);
+                                <li>
+                                    <input type="checkbox" @(isPermissionSelected ? "checked" : "") name="@nameof(Model.SelectedPermission)" value="@permission.Id" /> @permission.Title
+
+                                    @if (permissions.Any(p => p.ParentId == permission.ParentId))
+                                    {
+                                        <ul>
+                                            @foreach (var subPermission in permissions.Where(p => p.ParentId == permission.Id))
+                                            {
+                                                var isSubPermissionSelected = Model.SelectedPermission.Any(s => s == subPermission.Id);
+                                                <li>
+                                                    <input type="checkbox" @(isSubPermissionSelected ? "checked" : "") name="@nameof(Model.SelectedPermission)" value="@subPermission.Id" /> @subPermission.Title
+                                                    @if (permissions.Any(p => p.ParentId == subPermission.ParentId))
+                                                    {
+                                                        <ul>
+
+                                                            @foreach (var sub2Permission in permissions.Where(p => p.ParentId == subPermission.Id))
+                                                            {
+                                                                var isSub2PermissionSelected = Model.SelectedPermission.Any(s => s == sub2Permission.Id);
+                                                                <li>
+                                                                    <input type="checkbox" @(isSub2PermissionSelected ? "checked" : "") name="@nameof(Model.SelectedPermission)" value="@sub2Permission.Id" /> @sub2Permission.Title
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    }
+                </div>
+                <!-- /.panel-body -->
+            </div>
+
+        </div>
+
+
+    </div>
+</form>
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+

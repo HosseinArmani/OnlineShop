@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "لوازم دکوری-وسایل تزئینی-فروشگاه اینترنتی تاس لند";
+}
+@section MetaTag
+    {
+    
+    <meta name=robots content="index, follow">
+    <meta name=description content="تاس لند معتبرترین و متفاوت ترین فروشگاه اینترنتی لوازم دکوری و اکسسوری خانه و آشپزخانه می باشد تمام محصولات با بالاترین کیفیت عرضه می شود. با ما میتوانید منزل خود را مدرن و شیک بکنید">
+    <link rel="canonical" href="https://www.tasland.ir/" />
+
+
+}
+<h1 hidden="hidden">تاس لند</h1>
+<!-- slider-main--------------------------->
+@await Component.InvokeAsync("SiteSlider")
+<div class="container-main">
+
+
+
+    <!-- product_categories-------------------->
+    @await Component.InvokeAsync("ProductGroup")
+    <!-- product_categories-------------------->
+</div>
+<!-- slidre-product------------------------>
+
+<div class="container-main">
+    <div class="d-block">
+
+        @await Component.InvokeAsync("PopularProduct")
+
+        @await Component.InvokeAsync("LatestArticles")
+
+        @await Component.InvokeAsync("LatestProducts")
+
+    </div>
+</div>

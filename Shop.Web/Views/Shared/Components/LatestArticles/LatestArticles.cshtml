@@ -1,0 +1,32 @@
+﻿@using Shop.Domain.ViewModels.Site
+@model List<ArticlelistItemViewModel>
+
+@if (Model != null && Model.Any())
+{
+    <div class="col-12 d-inline-block">
+        <div class="slider-widget-products">
+            <div class="widget widget-product card">
+                <header class="card-header">
+                    <span class="title-one"> آخرین مقالات</span>
+                    <h3 class="card-title"></h3>
+                </header>
+                <div class="product-carousel owl-carousel owl-theme owl-rtl owl-loaded owl-drag">
+                    <div class="owl-stage-outer">
+                        <div class="owl-stage">
+
+                            @foreach (var item in Model)
+                            {
+                                <partial name="_ArticleBox" model="item" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- brand--------------------------------------->
+            <!-- brand----------------------------------------->
+            <!-- Modal -->
+
+        </div>
+    </div>
+}

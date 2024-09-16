@@ -1,0 +1,520 @@
+﻿@using Shop.Domain.ViewModels.Site
+@model ProductDetailViewModel
+@{
+    ViewData["Title"] = Model.Name;
+    var relatedProducts = (List<ProductListItemViewModel>)TempData["RelatedProducts"];
+    int prcent = 0;
+    
+
+}
+@section MetaTag
+    {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=robots content=index,follow>
+    <meta name=description content="@Model.ShortDescription">
+    <title>@Model.Name</title>
+    <link rel="canonical" href="https://www.tasland.ir/ProductDetaeil/@Model.ProductId" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content="@Model.Name" />
+    <meta property="og:description" content="@Model.Description" />
+    <meta property="og:image" content="https://tasland.ir/ImageProduct/Product/@Model.ImageName" />
+    <meta property="og:url" content="https://tasland.ir/ProductDetaeil/@Model.ProductId" />
+    <meta property="og:site_name" content="وبسایت فروشگاهی تاس لند" />
+
+
+}
+@section scripts
+{
+   
+    <script src="~/js/vendor/lightgallery-all.js"></script>
+    <script src="~/js/vendor/jquery.ez-plus.js"></script>
+    <script src="~/js/vendor/ResizeSensor.min.js"></script>
+    <script src="~/js/vendor/wNumb.js"></script>
+    <script src="~/js/vendor/theia-sticky-sidebar.min.js"></script>
+    <script src="~/js/vendor/comment.js"></script>
+    <partial name="_Custom" />
+
+
+}
+
+<div class="container-main" >
+    <div class="d-block">
+        <div class="page-content page-row">
+            <div class="main-row">
+                <div id="breadcrumb">
+                    <i class="mdi mdi-home"></i>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                            <li class="breadcrumb-item"><a asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@Model.ProductGroup.Id"> @Model.ProductGroup.GroupTitle</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                @Model.Name
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg">
+                    <div class="product type-product">
+                        <div class="col-lg-5 col-xs-12 pr d-block" id=productdetail>
+
+                            <div class="product-gallery">
+                                <div class="gallery">
+                                    <div class="gallery-item">
+                                        <div>
+                                            <ul class="gallery-actions">
+
+                                                <li>
+                                                    <a asp-area="User" asp-controller="Account" asp-action="UserFavorites" asp-route-productId="@Model.ProductId" class="btn-option ">
+                                                        <i class="mdi mdi-heart-outline"></i>
+                                                        <span>محبوب</span>
+                                                    </a>
+                                                </li>
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="gallery-item">
+                                            <div class="gallery-img">
+                                                <div>
+                                                    <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">
+                                                        <img class="zoom-img" id="img-product-zoom"
+                                                             src="/ImageProduct/Product/@Model.ImageName"
+                                                             data-zoom-image="/ImageProduct/Product/@Model.ImageName"
+                                                             width="411" alt="@Model.Name" title="@Model.Name" />
+                                                        <div id="gallery_01f">
+                                                    </a>
+                                                    @if (Model.ImageGallery != null && Model.ImageGallery.Any())
+                                                    {
+                                                        <ul class="gallery-items owl-carousel owl-theme"
+                                                            id="gallery-slider">
+                                                            @foreach (var image in Model.ImageGallery)
+                                                            {
+                                                                <li class="item">
+                                                                    <a href="#" class="elevatezoom-gallery active"
+                                                                       data-update=""
+                                                                       data-image="/ImageProduct/ProductGallery/@image"
+                                                                       data-zoom-image="/ImageProduct/ProductGallery/@image">
+                                                                        <img src="/ImageProduct/ProductGallery/@image"
+                                                                             width="100" alt="@Model.Name" title="@Model.Name" />
+                                                                    </a>
+                                                                </li>
+                                                            }
+
+                                                        </ul>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-7 col-xs-12 pl mt-5 d-block">
+                            <section class="product-info">
+                                <div class="product-headline">
+                                    <h1 class="product-title">
+                                        @Model.Name
+                                    </h1>
+
+                                </div>
+
+                                <div class="product-config-wrapper">
+                                    <div class="product-directory">
+                                        <ul>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-archive"></i> دسته:
+                                                </span>
+                                                <a asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@Model.ProductGroup.Id" class="product-link product-cat-title">@Model.ProductGroup.GroupTitle</a>
+
+                                            </li>
+                                            <li>
+                                                <span>
+                                                    <i class="fa fa-tags"></i> برچسب:
+                                                </span>
+                                                @foreach (var tag in Model.ProductTags)
+                                                {
+                                                    <a href="/Product/ArchiveProduct?TitleInBrowser=@tag.TagName" class="product-link product-tag-title">@tag.TagName</a>
+                                                }
+
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="col=lg-6 col-md-6 col-xs-12 pr">
+
+                                        @if (Model.ProductFeatures != null && Model.ProductFeatures.Any())
+                                        {
+                                            <div class="product-params pt-3">
+                                                <ul data-title="ويژگي‌هاي محصول">
+                                                </ul>
+                                                <div class="bd-example">
+                                                    <table class="table ">
+
+                                                        <tbody>
+                                                            @foreach (var features in Model.ProductFeatures)
+                                                            {
+                                                                <tr>
+                                                                    <th>@features.FeatureTitle</th>
+                                                                    <td>@features.FeatureValue</td>
+
+                                                                </tr>
+                                                            }
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                    <div class="col=lg-6 col-md-6 col-xs-12 pr">
+                                        <div class="product-seller-info">
+                                            <div class="seller-info-changable">
+                                                <div class="product-seller-row vendor">
+                                                    <span class="title"> فروشنده:</span>
+                                                    <a href="#" class="product-name">تاس لند</a>
+                                                </div>
+
+                                                @{
+
+                                                    if (Model.DicPercent != null)
+                                                    {
+                                                        prcent = (Model.Price * (int)Model.DicPercent) / 100;
+
+                                                    }
+                                                }
+                                                @if (Model.IsActive && Model.Count > 5)
+                                                {
+                                                    if (Model.DicPercent != null)
+                                                    {
+                                                        <div class="product-seller-row price">
+                                                            <span class="title"> قيمت:</span>
+                                                            <a href="#" class="product-name">
+                                                                <span class="amount">
+                                                                    <del>@Model.Price.ToString("#,0")</del>
+                                                                    <span>تومان</span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-seller-row price">
+                                                            <span class="title"> قیمت بعد از تخفیف:</span>
+                                                            <a href="#" class="product-name">
+                                                                <span class="amount">
+                                                                    @((Model.Price-prcent).ToString("#,0"))
+                                                                    <span>تومان</span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="product-seller-row price">
+                                                            <span class="title"> قيمت:</span>
+                                                            <a href="#" class="product-name">
+                                                                <span class="amount">
+                                                                    @Model.Price.ToString("0,#")
+                                                                    <span>تومان</span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    }
+
+                                                    <div class="product-seller-row add-to-cart">
+                                                        <a asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@Model.ProductId" class="btn btn-primary" id="add-to-basket">
+                                                            <span>افزودن به سبد خريد</span>
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="product-seller-row price">
+                                                        <span class="title"> قيمت:</span>
+                                                        <span href="#" class="product-name">
+                                                            <span class="unavailable">ناموجود</span>
+                                                        </span>
+                                                    </div>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="product-usp">
+                            <div class="product-feature">
+                                <div class="product-feature-col">
+                                    <a href="#" class="product-feature-item">
+                                        <img src="/images/page-single-product/delivery.svg" alt="تحویل محصول">
+                                        تحویل
+                                        <br>
+                                        3 الی 5 روز کاری
+                                    </a>
+                                </div>
+                                <div class="product-feature-col">
+                                    <a href="#" class="product-feature-item">
+                                        <img src="/images/page-single-product/origin-guarantee.svg" alt="ضمانت">
+                                        ضمانت
+                                        <br>
+                                        اصل بودن کالا
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tabs">
+                <div class="tab-box">
+                    <ul class="tab nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="Review-tab" data-toggle="tab" href="#Review" role="tab"
+                               aria-controls="Review" aria-selected="true">
+                                <i class="mdi mdi-glasses"></i>
+                                توضیحات
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="Specifications-tab" data-toggle="tab" href="#Specifications"
+                               role="tab" aria-controls="Specifications" aria-selected="false">
+                                <i class="mdi mdi-format-list-checks"></i>
+                                توضیحات تکمیلی
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="User-comments-tab" data-toggle="tab" href="#User-comments"
+                               role="tab" aria-controls="User-comments" aria-selected="false">
+                                <i class="mdi mdi-comment-text-multiple-outline"></i>
+                                نظرات کاربران
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="col-lg">
+                    <div class="tabs-content">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="Review" role="tabpanel"
+                                 aria-labelledby="Review-tab">
+                                <h2 class="params-headline">نقد و بررسی اجمالی</h2>
+                                <section class="content-expert-summary">
+                                    <div class="mask pm-3">
+                                        <div class="mask-text">
+                                            <p>
+                                                @Model.ShortDescription
+                                            </p>
+                                        </div>
+
+                                        <div class="shadow-box"></div>
+                                    </div>
+                                </section>
+
+
+                            </div>
+                            <div class="tab-pane fade" id="Specifications" role="tabpanel"
+                                 aria-labelledby="Specifications-tab">
+                                <article>
+                                    <h2 class="params-headline">
+                                        مشخصات فنی
+                                        <span>@Model.Name</span>
+                                    </h2>
+                                    <section class="content-expert-summary">
+                                        <div class="mask pm-3">
+                                            <div class="mask-text">
+                                                <p>
+                                                    @Html.Raw(Model.Description)
+                                                </p>
+                                            </div>
+                                            <a href="#" class="mask-handler">
+                                                <span class="show-more">+ ادامه مطلب</span>
+                                                <span class="show-less">- بستن</span>
+                                            </a>
+                                            <div class="shadow-box"></div>
+                                        </div>
+                                    </section>
+                                </article>
+                            </div>
+                            <div class="tab-pane fade" id="User-comments" role="tabpanel" 
+                                 aria-labelledby="User-comments-tab">
+                                <div class="comments" id="commentProduct">
+
+                                    <div class="comments-summary">
+
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            <div class="col-lg-6 col-md-6 col-xs-12 pull-right">
+                                                <div class="comments-add-col-form">
+                                                    <div class="form-comment">
+                                                        <div class="col-md-12 col-sm-12">
+                                                            <div class="form-ui">
+                                                                <form asp-controller="Product" asp-action="CreateComment" method="post">
+
+                                                                    <input type="hidden" name="ParentId" id="ParentId" />
+                                                                    <input type="hidden" name="ProductId" value="@Model.ProductId" />
+                                                                    <div class="row">
+
+                                                                        <div class="col-12 mt-3">
+                                                                            <div class="form-row-title mb-2">
+                                                                                متن نظر شما
+                                                                                (اجباری)
+                                                                            </div>
+                                                                            <div class="form-row">
+                                                                                <textarea name="Comment" class="input-ui pr-2 pt-2"
+                                                                                          rows="5"
+                                                                                          placeholder="متن خود را بنویسید"></textarea>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <br>
+                                                                        <br>
+                                                                        <br>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-md-2">Recaptcha</label>
+                                                                            <div class="col-md-10">
+                                                                                <div class="g-recaptcha" data-sitekey="6LeLlb8kAAAAAPCzmi_qZd3ozNxU6-6sBJbSNwsX"></div>
+                                                                                <span class="text-danger">@ViewBag.Message</span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 mt-5 px-0">
+                                                                            <button type="submit" class="btn btn-success">
+                                                                                ثبت نظر
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-lg-6 col-md-6 col-xs-12 pr">
+                                                <div class="comments-summary-note">
+                                                    <h6>شما هم می‌توانید در مورد این کالا نظر بدهید.</h6>
+                                                    <p>
+                                                        برای ثبت نظر، لازم است ابتدا وارد حساب کاربری خود شوید.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <div class="product-comment-list">
+
+
+                                            @await Component.InvokeAsync("ProductComment",new {productId=Model.ProductId})
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-xs-12 pr order-1 d-block">
+        <div class="slider-widget-products slider-content-tabs">
+            <div class="widget widget-product card slider-content-tabs">
+                <header class="card-header header-product">
+                    <span class="title-one">محصولات مرتبط</span>
+                    <h3 class="card-title"></h3>
+                </header>
+                <div class="product-carousel owl-carousel owl-theme owl-rtl owl-loaded owl-drag">
+                    <div class="owl-stage-outer">
+                        <div class="owl-stage"
+                             id="productrelated">
+
+                            @if (relatedProducts != null && relatedProducts.Any())
+                            {
+                                @foreach (var related in relatedProducts)
+                                {
+                                    <div class="owl-item tab-item active" id="productrelatedbox">
+                                        <div class="item">
+                                            <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@related.ProductId" class="d-block">
+                                                @if (related.DicPercent != null)
+                                                {
+                                                    <div class="promotion-badge">فروش ویژه</div>
+                                                }
+
+                                                @if (related.DicPercent != null)
+                                                {
+                                                    <div class="discount-d">
+                                                        <span>@related.DicPercent%</span>
+                                                    </div>
+                                                }
+                                                <img src="/ImageProduct/Product/@related.ProductImage" alt="@Model.Name" title="@Model.Name">
+                                            </a>
+                                            <h2 class="post-title">
+                                                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@related.ProductId">
+                                                    @related.ProductName
+                                                </a>
+                                            </h2>
+
+                                            @{
+
+                                                if (related.DicPercent != null)
+                                                {
+                                                    prcent = (related.Price * (int)related.DicPercent) / 100;
+
+                                                }
+                                            }
+                                            @if (related.IsActive)
+                                            {
+
+
+                                                @if (related.DicPercent != null)
+                                                {
+                                                    <div class="price">
+                                                        <span class="amount">
+                                                            <del><span>@related.Price.ToString("#,0")<span>تومان</span></span></del>
+                                                            <ins><span>@((related.Price-prcent).ToString("#,0"))<span>تومان</span></span></ins>
+                                                        </span>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="price">
+                                                        <span class="amount">
+
+                                                            <ins><span>@related.Price.ToString("#,0")<span>تومان</span></span></ins>
+                                                        </span>
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="price">
+                                                    <span class="amount">
+
+                                                        <ins><span>اتمام موجودی</span></ins>
+                                                    </span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

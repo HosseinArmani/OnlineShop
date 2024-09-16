@@ -1,0 +1,86 @@
+﻿@model Shop.Domain.ViewModels.Account.RegisterUserViewModel
+@{
+    ViewData["Title"] = "ثبت نام";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <section class="page-account-box">
+                <div class="col-lg-6 col-md-6 col-xs-12 mx-auto">
+                    <div class="ds-userlogin">
+                        <a href="#" class="account-box-logo">t</a>
+                        <div class="account-box">
+                            <div class="account-box-headline">
+                                <a href="/Login" class="login-ds">
+                                    <span class="title">ورود</span>
+                                    <span class="sub-title">به تاس لند</span>
+                                </a>
+                                <a href="/register" class="register-ds active">
+                                    <span class="title">ثبت نام</span>
+                                    <span class="sub-title">در تاس لند</span>
+                                </a>
+                            </div>
+                            <div class="Login-to-account mt-4">
+                                <div class="account-box-content">
+                                    <h4>ثبت نام </h4>
+                                    <form asp-controller="Account" asp-action="Register" method="post" class="form-account text-right">
+                                        <div class="form-account-title">
+                                            <label for="email-phone">شماره موبایل</label>
+                                            <input type="number" asp-for="PhoneNumber" class="number-email-input" id="email-phone" placeholder="مثال:09353812764">
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-account-title">
+                                            <label for="email-phone"> نام</label>
+                                            <input type="text" asp-for="FirstName" class="number-email-input" id="email-phone">
+                                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-account-title">
+                                            <label for="email-phone"> نام خانوادگی </label>
+                                            <input type="text" asp-for="LastName" class="number-email-input" id="email-phone">
+                                            <span asp-validation-for="LastName" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-account-title">
+                                            <label for="password">رمز عبور</label>
+                                            <input type="password" asp-for="Password" class="password-input" id="pas">
+                                            <span class="show-hide">
+                                                <i class="fa fa-eye" id="eye"></i>
+                                            </span>
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-account-title">
+                                            <label for="password">تکرار رمز عبور</label>
+                                            <input type="password" asp-for="ConfirmPassword" class="password-input" >
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                        @*<div class="form-auth-row">
+                                                <label for="#" class="ui-checkbox mt-1">
+                                                    <input type="checkbox" value="1" name="login" id="remember">
+                                                    <span class="ui-checkbox-check"></span>
+                                                </label>
+                                                <label for="remember" class="remember-me mr-0"><a href="#">حریم خصوصی</a> و <a href="#">شرایط قوانین </a>استفاده از سرویس های سایت دیجی‌اسمارت را مطالعه نموده و با کلیه موارد آن موافقم.</label>
+                                            </div>*@
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">Recaptcha</label>
+                                            <div class="col-md-10">
+                                                <div class="g-recaptcha" data-sitekey="6LeLlb8kAAAAAPCzmi_qZd3ozNxU6-6sBJbSNwsX"></div>
+                                                <span class="text-danger">@ViewBag.Message</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row-account">
+                                            <button class="btn btn-primary btn-register">ثبت نام در تاس لند</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+    
+}

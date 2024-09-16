@@ -1,0 +1,54 @@
+﻿@model Shop.Domain.ViewModels.Site.EditSliderViewModel
+@{
+    ViewData["Title"] = "ویرایش اسلایدر";
+}
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="SliderId"/>
+        <input type="hidden" asp-for="SliderImageName" />
+        <div class="col-md-8">
+            <h2> @ViewData["Title"] </h2>
+            <hr />
+            <div class="form-group">
+                <label>عنوان اسلایدر</label>
+                <input type="text" asp-for="SliderTitle" class="form-control">
+                <span asp-validation-for="SliderTitle"></span>
+            </div>
+            <div class="form-group">
+                <label>آدرس اسلایدر</label>
+                <input type="text" asp-for="Url" class="form-control">
+                <span asp-validation-for="Url"></span>
+            </div>
+            <div class="form-group">
+                <label>وضعیت اسلایدر</label>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" asp-for="IsActive">
+                        فعال
+                    </label>
+                </div>
+            </div>
+
+            <input type="submit" value="ذخیره اطلاعات" class="btn btn-success" />
+        </div>
+        <div class="col-md-4">
+            <p></p>
+            <img id="imGroup" class="thumbnail" src="/ImageSlider/Thumb/@Model.SliderImageName" />
+            <div class="form-group">
+
+                <label>انتخاب تصویر</label>
+                <input type="file" name="imgSlider" id="imgProductGroup">
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts
+{
+    <partial name="_Custom" />
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

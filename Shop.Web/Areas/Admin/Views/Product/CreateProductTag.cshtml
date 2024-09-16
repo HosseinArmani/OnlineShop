@@ -1,0 +1,34 @@
+﻿@model Shop.Domain.ViewModels.Admin.Product.CreateProductTagViewModel
+@{
+    ViewData["Title"] = "افزودن برچسب";
+
+}
+<meta name=robots content=noindex,nofollow>
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+        <div class="col-md-4">
+            <h2> @ViewData["Title"] </h2>
+            <hr />
+          
+                <div class="form-group">
+                    <label> برچسب</label>
+                    <input type="text" asp-for="TagName" class="form-control">
+                    <span asp-validation-for="TagName"></span>
+                </div>
+          
+            <input type="submit" value="ذخیره اطلاعات" class="btn btn-success" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts
+{
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+

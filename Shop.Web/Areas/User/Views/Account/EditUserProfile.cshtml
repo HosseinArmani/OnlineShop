@@ -1,0 +1,67 @@
+﻿@model Shop.Domain.ViewModels.Account.EditUserProfileViewModel
+
+@{
+    ViewData["Title"] = "ویرایش حساب کاربری";
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>ویرایش پروفایل</title>
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+                        @await Component.InvokeAsync("UserSideBar")
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <div class="profile-address">
+                                    <div class="middle-container">
+                                        <form method="post" asp-area="User" asp-controller="Account" asp-action="EditUserProfile" class="form-checkout">
+                                            <div class="form-checkout-row">
+                                                <label for="namefirst">
+                                                    نام <abbr class="required" title="ضروری"
+                                                              id="requiredcheckout">*</abbr>
+                                                </label>
+                                                <input type="text" asp-for="FirstName" id="namefirst"
+                                                       class="input-namefirst-checkout form-control">
+                                                <span class="text-danger" asp-validation-for="FirstName"></span>
+
+                                                <label for="namelast">
+                                                    نام خانوادگی <abbr class="required"
+                                                                       title="ضروری" id="requiredcheckout">*</abbr>
+                                                </label>
+                                                <input type="text" asp-for="LastName" id="namelast"
+                                                       class="input-namelast-checkout form-control">
+                                                <span class="text-danger" asp-validation-for="LastName"></span>
+                                                <div>
+                                                    <label>
+                                                        موبایل
+                                                    </label>
+                                                    <p>@Model.PhoneNumber</p>
+                                                </div>
+
+                                                <div class="AR-CR">
+                                                    <button class="btn-registrar"> ثبت تغییرات </button>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
+

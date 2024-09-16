@@ -1,0 +1,56 @@
+﻿@model Shop.Domain.ViewModels.Admin.Order.EditDiscountCodeViewModel
+@{
+    ViewData["Title"] = "ویرایش کد تخفیف";
+}
+<meta name=robots content=noindex,nofollow>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">ویرایش کد تخفیف </h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <form method="post">
+        <input type="hidden" asp-for="DiscountId" />
+        <div class="form-group">
+            <label>کد تخفیف </label>
+            <input type="text" asp-for="DisCountCode" class="form-control">
+            <span asp-validation-for="DisCountCode"></span>
+        </div>
+        <div class="form-group">
+            <label>درصد کد تخفیف </label>
+            <input type="number" asp-for="Percent" class="form-control">
+            <span asp-validation-for="Percent"></span>
+        </div>
+        <div class="form-group">
+            <label>تعداد </label>
+            <input type="number" asp-for="UsabaleCount" class="form-control" placeholder="اجباری نیست">
+        </div>
+        <div class="form-group">
+            <label>تاریخ شروع </label>
+            <input id="stDate" name="StDate" value="@((Model.StartDate!=null)?Model.StartDate.Value.ToShamsiDate():"")" placeholder="اجباری نیست" />
+        </div>
+        <div class="form-group">
+            <label>تاریخ پایان </label>
+            <input id="edDate" name="EdDate" value="@((Model.EndDate!=null)?Model.EndDate.Value.ToShamsiDate():"")" placeholder="اجباری نیست" />
+        </div>
+        <input type="submit" value="ویرایش اطلاعات" class="btn btn-warning" />
+
+    </form>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2013.2.918/styles/kendo.default.min.css" rel="stylesheet" />
+
+    <script src="~/AdminContent/js/jquery-1.10.2.js"></script>
+
+    <script src="~/AdminContent/js/kendo.all.min.js"></script>
+
+    <script src="~/AdminContent/js/DatePickerFarsi.js"></script>
+
+}

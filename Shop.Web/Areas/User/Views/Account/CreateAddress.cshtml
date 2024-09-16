@@ -1,0 +1,103 @@
+﻿@model Shop.Domain.ViewModels.Account.CreateAddressViewModel
+@{
+    ViewData["Title"] = "CreateAddress";
+}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name=robots content=index,follow>
+<title>آدرس</title>
+
+<div class="container-main">
+    <div class="d-block">
+        <section class="profile-home">
+            <div class="col-lg">
+                <div class="post-item-profile order-1 d-block">
+                    <div class="col-lg-3 col-md-3 col-xs-12 pr">
+
+                        @await Component.InvokeAsync("UserSideBar")
+
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12 pl">
+                        <div class="profile-content">
+                            <div class="profile-stats">
+                                <div class="profile-address">
+                                    <div class="middle-container">
+                                        <form asp-area="User" asp-controller="Account" asp-action="CreateAddress" method="post" class="form-checkout">
+                                            <input type="hidden" asp-for="UserId" />
+                                            <span class="text-danger" asp-validation-for="UserId"></span>
+                                            <div class="form-checkout-row">
+                                                <label for="name">
+                                                    نام
+                                                </label>
+                                                <input type="text" asp-for="FirstName" disabled
+                                                       class="input-name-checkout form-control">
+                                                <label>
+                                                    نام خانوادگی
+                                                </label>
+                                                <input type="text" asp-for="LastName" disabled
+                                                       class="input-name-checkout form-control">
+                                                <label for="phone-number">
+                                                    شماره موبایل
+                                                </label>
+                                                <input type="text" asp-for="PhoneNumber" disabled
+                                                       class="input-name-checkout form-control text-left">
+
+                                                <div class="form-checkout-valid-row ir-select">
+                                                    <label for="province">
+                                                        استان
+                                                        <abbr class="required" title="ضروری"
+                                                              id="requiredcheckout">*</abbr>
+                                                    </label>
+                                                    <select asp-for="State" class="ir-province"></select>
+                                                    <span class="text-danger" asp-validation-for="State"></span>
+                                                    <br />
+                                                    <label for="city">
+                                                        شهر
+                                                        <abbr class="required" title="ضروری"
+                                                              id="requiredcheckout">*</abbr>
+                                                    </label>
+                                                    <select asp-for="City" class="ir-city"></select>
+                                                    <span class="text-danger" asp-validation-for="City"></span>
+                                                </div>
+
+
+                                                <label for="post-code">
+                                                    کد پستی<abbr class="required" title="ضروری"
+                                                                 id="requiredcheckout">*</abbr>
+                                                </label>
+                                                <input type="text" asp-for="PostalCode"
+                                                       class="input-name-checkout form-control"
+                                                       placeholder="کد پستی را بدون خط تیره بنویسید">
+                                                <span class="text-danger" asp-validation-for="PostalCode"></span>
+                                                <label for="address">
+                                                    آدرس
+                                                    <abbr class="required" title="ضروری"
+                                                          id="requiredcheckout">*</abbr>
+                                                </label>
+                                                <textarea rows="5" cols="30" asp-for="FullAddress"
+                                                          class="textarea-name-checkout form-control"></textarea>
+                                                <span class="text-danger" asp-validation-for="FullAddress"></span>
+
+                                                <div class="AR-CR">
+                                                    <button class="btn-registrar"> ثبت آدرس</button>
+                                                    <a asp-area="User" asp-controller="Account" asp-action="ShowAddress" class="cancel-edit-address" data-dismiss="modal"
+                                                       aria-label="Close">بازگشت</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="StateAndCity" />
+    <partial name="_ValidationScriptsPartial" />
+}

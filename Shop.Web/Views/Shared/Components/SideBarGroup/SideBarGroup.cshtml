@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Shop.Domain.Models.Production.ProductGroup>
+<li id="nav-menu-item" class="menu-item nav-overlay">
+    <a href="/" class="current-link-menu">صفحه اصلی </a>
+</li>
+<li id="nav-menu-item" class="menu-item nav-overlay">
+    <a asp-controller="Product" asp-action="ArchiveProduct" class="current-link-menu">همه ی  محصولات </a>
+</li>
+@foreach (var group in Model.Where(g => g.ParentId == null))
+{
+
+    <li id="nav-menu-item" class="menu-item nav-overlay">
+        <a asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@group.Id" class="current-link-menu">
+            @group.GroupTitle
+            <i class="fa fa-angle-down"></i>
+        </a>
+        @if (Model.Any(g => g.ParentId == group.Id))
+        {
+            <ul class="sub-menu is-mega-menu mega-menu-level-two">
+                @foreach (var subGroup in Model.Where(g => g.ParentId == group.Id))
+                {
+                    <li class="menu-mega-item menu-item-type-mega-menu">
+
+                        <ul class="sub-menu mega-menu-level-three">
+                            <li class="menu-mega-item-three">
+                                <a asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@subGroup.Id">
+                                    @subGroup.GroupTitle
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                }
+
+
+            </ul>
+        }
+    </li>
+}
+<li id="nav-menu-item" class="menu-item nav-overlay">
+    <a asp-controller="Article" asp-action="ArchiveArticle" class="current-link-menu"> وبلاگ </a>
+</li>
+<li id="nav-menu-item" class="menu-item nav-overlay">
+    <a asp-controller="Home" asp-action="AboutUs" class="current-link-menu">  درباره ما </a>
+</li>
+<li id="nav-menu-item" class="menu-item nav-overlay">
+    <a asp-controller="Home" asp-action="ContactUs" class="current-link-menu"> تماس با ما </a>
+</li>

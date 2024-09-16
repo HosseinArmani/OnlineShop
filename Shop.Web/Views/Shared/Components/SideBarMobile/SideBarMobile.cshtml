@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Shop.Domain.Models.Production.ProductGroup>
+
+<nav class="sidebar">
+    <div class="nav-header">
+        <div class="header-cover"></div>
+        <div class="logo-wrap">
+            <a class="logo-icon" href="/"><img alt="logo-icon" src="/images/LogoTas.png" id="#sidebarLogo"></a>
+        </div>
+    </div>
+  
+    <ul class="nav-categories ul-base">
+
+        @foreach (var group in Model.Where(g => g.ParentId == null))
+        {
+
+            <li>
+
+                <a id="sidbargroupcolor" asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@group.Id">
+
+                    @group.GroupTitle
+                </a>
+                <div>
+
+                    @if (Model.Any(g => g.ParentId == group.Id))
+                    {
+                        <ul>
+                            @foreach (var subGroup in Model.Where(g => g.ParentId == group.Id))
+                            {
+                                <li>
+                                    <a asp-controller="Product" asp-action="ArchiveProduct" asp-route-SelectedGroups="@subGroup.Id" class="category-level-2">@subGroup.GroupTitle</a>
+
+                                </li>
+                            }
+
+                        </ul>
+                    }
+                </div>
+            </li>
+        }
+        <li>
+
+            <a id="sidbargroupcolor" asp-controller="Article" asp-action="ArchiveArticle">
+
+                وبلاگ
+            </a>
+
+        </li>
+        <li>
+
+            <a id="sidbargroupcolor" asp-controller="Home" asp-action="AboutUs">
+
+                درباره ما
+            </a>
+
+        </li>
+        <li>
+
+            <a id="sidbargroupcolor" asp-controller="Home" asp-action="ContactUs">
+
+                تماس با ما
+            </a>
+
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,22 @@
+﻿@model Shop.Domain.ViewModels.Site.ArticlelistItemViewModel
+<div class="owl-item active">
+    <div class="item">
+        <section class="product-box product product-type-simple">
+            <div class="thumb">
+                <a asp-controller="Article" asp-action="ArticleDetail" asp-route-articleId="@Model.ArticleId" class="d-block">
+
+                    <img src="/ImageArticle/@Model.ArticleImage" alt="@Model.ArticleTitle" title="@Model.ArticleTitle">
+                </a>
+            </div>
+            <h2 class="post-title">
+                <a asp-controller="Article" asp-action="ArticleDetail" asp-route-articleId="@Model.ArticleId">
+                    @Model.ArticleTitle
+                </a>
+               
+            </h2>
+     
+
+        </section>
+
+    </div>
+</div>

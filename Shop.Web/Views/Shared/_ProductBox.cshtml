@@ -1,0 +1,90 @@
+﻿@model Shop.Domain.ViewModels.Site.ProductListItemViewModel
+<div class="owl-item active">
+    <div class="item">
+        <section class="product-box product product-type-simple">
+            <div class="thumb">
+                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId" class="d-block">
+                    @if (Model.DicPercent != null)
+                    {
+                        <div class="promotion-badge">فروش ویژه</div>
+                    }
+              
+                    @if (Model.DicPercent != null)
+                    {
+                        <div class="discount-d">
+                            <span>@Model.DicPercent%</span>
+                        </div>
+                    }
+                    <img src="/ImageProduct/Product/@Model.ProductImage" alt="@Model.ProductName" title="@Model.ProductName">
+                </a>
+            </div>
+            <h2 class="post-title">
+                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@Model.ProductId">
+                    @Model.ProductName
+                </a>
+            </h2>
+            @{
+                int prcent = 0;
+                if (Model.DicPercent != null)
+                {
+                    prcent = (Model.Price * (int)Model.DicPercent) / 100;
+
+                }
+            }
+            @if (Model.IsActive && Model.Count > 5)
+            {
+
+
+                @if (Model.DicPercent != null)
+                {
+                    <div class="price">
+                        <span class="amount">
+                            <del><span>@Model.Price.ToString("#,0")<span>تومان</span></span></del>
+                            <ins><span>@((Model.Price-prcent).ToString("#,0"))<span>تومان</span></span></ins>
+                        </span>
+                    </div>
+                }
+                else
+                {
+                    <div class="price">
+                        <span class="amount">
+
+                            <ins><span>@Model.Price.ToString("#,0")<span>تومان</span></span></ins>
+                        </span>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="price">
+                    <span class="amount">
+
+                        <ins><span>اتمام موجودی</span></ins>
+                    </span>
+                </div>
+            }
+        
+            <div class="actions">
+                <ul>
+                    <li class="action-item like">
+                        <a asp-area="User" asp-controller="Account" asp-action="UserFavorites" asp-route-productId="@Model.ProductId" class="btn btn-light a">
+                            <i class="fa fa-heart-o"></i>
+                        </a>
+                    </li>
+                    @if (Model.IsActive && Model.Count > 5)
+                    {
+
+                        <li class="action-item add-to-cart">
+                            <a asp-controller="Product" asp-action="BuyProduct" asp-route-productId="@Model.ProductId" class="btn btn-light ">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                        </li>
+                    }
+                    </ul>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+

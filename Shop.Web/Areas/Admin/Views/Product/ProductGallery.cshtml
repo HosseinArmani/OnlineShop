@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "ProductGallery";
+    long productId = (long)ViewBag.ProductId;
+}
+<meta name=robots content=noindex,nofollow>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="card-text">ثبت اطلاعات</p>
+                <div id="shopDropZone" class="dropzone" dropzone-url="@Url.Action("AddImageToProduct","Product",new {productId =productId})">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section scripts{
+
+    <script src="~/AdminContent/js/shopDropZone.js"></script>
+}

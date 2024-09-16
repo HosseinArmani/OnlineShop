@@ -1,0 +1,42 @@
+﻿@model Shop.Domain.ViewModels.Admin.Product.CreateProductFeatureViewModel
+@{
+    ViewData["Title"] = "افزودن ویژگی";
+}
+
+<meta name=robots content=noindex,nofollow>
+
+<div class="row">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+        <div class="col-md-10">
+            <h2> @ViewData["Title"] </h2>
+            <hr />
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>نام ویژگی</label>
+                    <input type="text" asp-for="FeatureTitle" class="form-control">
+                    <span asp-validation-for="FeatureTitle"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>مقدار ویژگی</label>
+                    <input type="text" asp-for="FeatureValue" class="form-control">
+                    <span asp-validation-for="FeatureValue"></span>
+                </div>
+            </div>
+     
+          
+
+
+            <input type="submit" value="ذخیره اطلاعات" class="btn btn-success" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts
+{
+    
+    <partial name="_ValidationScriptsPartial" />
+}

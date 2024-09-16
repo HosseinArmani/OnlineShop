@@ -1,0 +1,97 @@
+﻿@using Shop.Application.Utils;
+@using Shop.Domain.ViewModels.Site 
+@model Shop.Domain.ViewModels.Site.ArticleDetailViewModel
+@{
+    ViewData["Title"] = Model.ArticleTitle;
+
+    var latestArticle = (List<ArticlelistItemViewModel>)TempData["LatestArticle"];
+}
+@section MetaTag
+    {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name=robots content=index,follow>
+    <meta name=description content="@Model.ShortDescription">
+    <title>@Model.ArticleTitle</title>
+    <link rel="canonical" href="https://www.tasland.ir/ProductDetaeil/@Model.ArticleId" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:type" content="product" />
+    <meta property="og:title" content="@Model.ArticleTitle" />
+    <meta property="og:description" content="@Model.Description" />
+    <meta property="og:image" content="https://tasland.ir/ImageArticle/@Model.ImageName" />
+    <meta property="og:url" content="https://tasland.ir/ProductDetaeil/@Model.ArticleId" />
+    <meta property="og:site_name" content="وبسایت فروشگاهی تاس لند" />
+
+
+}
+<main class="main-row mb-2 mt-2 d-block">
+    <div class="container-main">
+        <div class="d-block">
+            <div class="col-lg-9 col-md-8 col-xs-12 pr mt-3">
+                <section class="blog-home">
+                    <article class="post-item">
+                        <header class="entry-header mb-3">
+                            <div class="post-meta date">
+                                <i class="mdi mdi-calendar-month"></i>@Model.CreateDate.ToStringShamsiDate()
+                            </div>
+
+                            <div class="post-meta category">
+                                <i class="fa fa-tags"></i>
+                                <span>
+                                    برچسب:
+                                </span>     
+                                @foreach (var tag in Model.ArticleTags)
+                                {
+                                    <a href="/Article/ArchiveArticle?TitleInBrowser=@tag.TagName" class="product-link product-tag-title">@tag.TagName</a>
+                                }
+
+                            </div>
+
+
+                        </header>
+                        <div class="post-thumbnail">
+                            <img src="/ImageArticle/@Model.ImageName"
+                                 alt="@Model.ArticleTitle" title="@Model.ArticleTitle">
+                        </div>
+                        <div class="title">
+                            <a href="#">
+                                <h1 class="title-tag">
+                                    @Model.ArticleTitle
+                                </h1>
+                            </a>
+                        </div>
+                        <div id="ArticleStyle" class="content-blog">
+
+                            <p>
+                                @Html.Raw(Model.Description)
+                            </p>
+
+
+                        </div>
+                       
+                    
+                    </article>
+
+                </section>
+            </div>
+            <div class="col-lg-3 col-md-4 col-xs-12 pr mt-3 sticky-sidebar">
+                <div class="shortcode-widget-area-sidebar">
+                    <section class="widget-posts">
+                        <div class="header-sidebar mb-3">
+                            <h3>جدیدترین نوشته ها</h3>
+                        </div>
+                        <div class="content-sidebar">
+                            @foreach (var item in latestArticle)
+                            {
+                                <partial name="_LastestArticleBox" model="item" />
+                            }
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+

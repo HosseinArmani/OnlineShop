@@ -1,0 +1,80 @@
+﻿@model List<Shop.Domain.Models.Site.Slider> 
+@{
+    ViewData["Title"] = "لیست اسلایدر";
+    var index = 1;
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline" role="grid">         
+                        <br />
+                        <a asp-area="Admin" asp-controller="Site" asp-action="CreateSlider" class="btn btn-success">افزودن اسلایدر جدید</a>
+                        <br />
+                        <br />
+                        @if (Model != null && Model.Any())
+                        {
+                            <table class="table table-striped table-bordered table-hover dataTable no-footer" id="dataTables-example" aria-describedby="dataTables-example_info">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">اسلایدر تصویر</th>
+                                        <th scope="col"> عنوان اسلایدر</th>
+                                        <th scope="col">وضعیت</th>
+                                        <th scope="col">دستورات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var slider in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@index</th>
+                                            <td>
+                                                <img src="/ImageSlider/Thumb/@slider.SliderImageName" class="thumbnail" id="imgThumb" />
+                                            </td>
+                                            <td>@slider.SliderTitle</td>
+                                            <td>
+                                                @if (slider.IsActive)
+                                                {
+                                                    <span class="text text-success">فعال</span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span class="text text-danger">غیر فعال</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning btn-sm" asp-area="Admin" asp-controller="Site" asp-action="EditSlider" asp-route-SliderId="@slider.Id">ویرایش</a>
+                                                <a class="btn btn-danger btn-sm" asp-area="Admin" asp-controller="Site" asp-action="DeleteSlider" asp-route-sliderId="@slider.Id">حذف</a>
+
+                                            </td>
+                                        </tr>
+                                        index++;
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger">
+                                <b>ایتمی وجود ندارد</b>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <!-- /.table-responsive -->
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+

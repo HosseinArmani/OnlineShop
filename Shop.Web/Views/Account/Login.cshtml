@@ -1,0 +1,73 @@
+﻿@model Shop.Domain.ViewModels.Account.LoginUserViewModel
+@{
+    ViewData["Title"] = "ورود";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <section class="page-account-box">
+                <div class="col-lg-6 col-md-6 col-xs-12 mx-auto">
+                    <div class="ds-userlogin">
+                        <a href="#" class="account-box-logo">tasland</a>
+                        <div class="account-box">
+                            <div class="account-box-headline">
+                                <a href="login.html" class="login-ds active">
+                                    <span class="title">ورود</span>
+                                    <span class="sub-title">به تاس لند</span>
+                                </a>
+                                <a href="/register" class="register-ds">
+                                    <span class="title">ثبت نام</span>
+                                    <span class="sub-title"> در تاس لند</span>
+                                </a>
+                            </div>
+                            <div class="Login-to-account mt-4">
+                                <div class="account-box-content">
+                                    <h4>ورود به حساب کاربری</h4>
+                                    <form asp-controller="Account" asp-action="Login" method="post" class="form-account text-right">
+                                        <div class="form-account-title">
+                                            <label for="email-phone">شماره موبایل</label>
+                                            <input type="number" asp-for="PhoneNumber" class="number-email-input" id="email-phone" placeholder="مثال:09353812764">
+                                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-account-title">
+                                            <label for="password">رمز عبور</label>
+                                            <a href="forgotpassword" class="account-link-password">رمز خود را فراموش کرده ام</a>
+                                            <input type="password" asp-for="Password" class="password-input" id="pas">
+                                            <span class="show-hide">
+                                                <i class="fa fa-eye" id="eye"></i>
+                                            </span>
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-auth-row">
+                                            <label for="#" class="ui-checkbox mt-1">
+                                                <input type="checkbox" asp-for="RememberMe" id="remember">
+                                                <span class="ui-checkbox-check"></span>
+                                            </label>
+                                            <label for="remember" class="remember-me mr-0">مرا به خاطر بسپار</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-2">Recaptcha</label>
+                                            <div class="col-md-10">
+                                                <div class="g-recaptcha" data-sitekey="6LeLlb8kAAAAAPCzmi_qZd3ozNxU6-6sBJbSNwsX"></div>
+                                                <span class="text-danger">@ViewBag.Message</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row-account">
+                                            <button class="btn btn-primary btn-login">ورود به تاس لند</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    }
